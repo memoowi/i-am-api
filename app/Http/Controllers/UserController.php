@@ -18,7 +18,7 @@ class UserController extends Controller
                 'phone_number' => 'required|unique:users|numeric|min:10',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:8',
-                'role' => 'nullable|in:customer,driver',
+                'role' => 'in:customer,driver',
             ]);
 
             $user = User::create([
@@ -26,7 +26,7 @@ class UserController extends Controller
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => $request->role,
+                'role' => $request->role ?? 'customer',
             ]);
 
             $token = $user->createToken('auth_token')->plainTextToken;
