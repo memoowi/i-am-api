@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AmbulanceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingForDriverController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,14 @@ Route::middleware('auth:sanctum')->group(function () {
         // Route Ambulance
         Route::apiResource('/ambulances', AmbulanceController::class, [
             'only' => ['store', 'update'],
+        ]);
+
+        // Route Booking for Driver
+        // Index Pending Booking
+        Route::get('/bookings-pending', [BookingForDriverController::class, 'pendingList']);
+        // index booking history for driver and update status booking
+        Route::apiResource('/bookings-driver', BookingForDriverController::class, [
+            'only' => ['index', 'update'],
         ]);
         
     });
