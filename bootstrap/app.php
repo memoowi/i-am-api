@@ -14,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'api.driver' => \App\Http\Middleware\DriverOnly::class,
+        ]);
+        
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // $exceptions->shouldRenderJsonWhen(function (Request $request) {
