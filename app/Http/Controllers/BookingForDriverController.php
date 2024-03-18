@@ -48,6 +48,18 @@ class BookingForDriverController extends Controller
             ], 404);
         }
 
+        // Check for existing bookings for this ambulance
+        $existingBookings = Booking::where('ambulance_id', $request->user()->ambulance->id)
+            ->whereIn('status', ['accepted', 'picked'])
+            ->exists();
+
+        if ($existingBookings && $booking->status === 'pending') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ambulance is already assigned to another booking'
+            ], 403);
+        }
+
         if ($booking->status == 'pending') {
             $booking->update([
                 'ambulance_id' => $request->user()->ambulance->id,
