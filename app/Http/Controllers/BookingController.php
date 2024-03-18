@@ -78,7 +78,7 @@ class BookingController extends Controller
             ], 500);
         }
     }
-    public function update(Request $request, $id) // update for user (CANCEL BOOKING)
+    public function update(Request $request, $id) // update for user (CANCEL BOOKING on pending only)
     {
         $booking = Booking::find($id);
 
