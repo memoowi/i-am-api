@@ -14,7 +14,7 @@ class AmbulanceController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Ambulances retrieved successfully',
-            'data' => Ambulance::all(),
+            'data' => Ambulance::all()->load(['user']),
         ], 200);
     }
     public function show($id)

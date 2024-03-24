@@ -43,7 +43,6 @@ class BookingController extends Controller
                 'description' => 'required',
                 'latitude' => 'required',
                 'longitude' => 'required',
-                'booking_time' => 'required|date_format:Y-m-d H:i:s',
             ]);
 
             if ($request->user()->bookings()->whereIn('status', ['pending', 'accepted', 'picked'])->exists()) {
@@ -57,7 +56,7 @@ class BookingController extends Controller
                 'description' => $request->description,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
-                'booking_time' => $request->booking_time,
+                'booking_time' => now(),
             ]);
 
             return response()->json([
