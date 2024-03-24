@@ -12,6 +12,7 @@ class BookingController extends Controller
     public function index(Request $request) // index for user
     {
         $bookings = $request->user()->bookings()->get();
+        $bookings->load(['ambulance', 'ambulance.user']);
         return response()->json([
             'status' => 'success',
             'message' => 'Bookings retrieved successfully',
