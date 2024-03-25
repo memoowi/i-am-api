@@ -33,7 +33,7 @@ class BookingController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Booking retrieved successfully',
-            'data' => $booking,
+            'data' => $booking->load(['user']),
         ], 200);
     }
     public function store(Request $request) // can only make one booking at a time
