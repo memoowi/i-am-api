@@ -77,16 +77,16 @@ class AmbulanceController extends Controller
     {
         try {
             $request->validate([
-                'license_plate' => 'required',
-                'model' => 'required',
-                'latitude' => 'required',
-                'longitude' => 'required',
+                'license_plate' => 'string',
+                'model' => 'string',
+                'latitude' => 'numeric',
+                'longitude' => 'numeric',
             ]);
             $request->user()->ambulance()->update([
-                'license_plate' => $request->license_plate,
-                'model' => $request->model,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
+                'license_plate' => $request->license_plate ?? $request->user()->ambulance->license_plate,
+                'model' => $request->model ?? $request->user()->ambulance->model,
+                'latitude' => $request->latitude ?? $request->user()->ambulance->latitude,
+                'longitude' => $request->longitude ?? $request->user()->ambulance->longitude,
             ]);
             return response()->json([
                 'status' => 'success',
