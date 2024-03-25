@@ -23,18 +23,18 @@ class BookingForDriverController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Booking retrieved successfully',
-            'data' => $bookings
+            'data' => $bookings->load(['user']),
         ], 200);
     }
     public function index(Request $request)
     {
-        $bookings = Booking::where('status', ['accepted', 'picked', 'completed'])
+        $bookings = Booking::whereIn('status', ['accepted', 'picked', 'completed'])
             ->where('ambulance_id', $request->user()->ambulance->id)
             ->get();
         return response()->json([
             'status' => 'success',
             'message' => 'Booking retrieved successfully',
-            'data' => $bookings
+            'data' => $bookings->load(['user']),
         ], 200);
     }
     public function update(Request $request, $id)

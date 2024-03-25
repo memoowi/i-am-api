@@ -18,7 +18,7 @@ Route::apiResource('/ambulances', AmbulanceController::class, [
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return $request->user()->load('ambulance');
     });
     Route::post('/logout', [UserController::class, 'logout']);
 
@@ -31,9 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //ROUTE FOR DRIVER
     Route::middleware('api.driver')->group(function () {
         // Route Ambulance
-        Route::apiResource('/ambulances', AmbulanceController::class, [
-            'only' => ['store', 'update'],
-        ]);
+        Route::post('/ambulances', [AmbulanceController::class, 'store']);
+        Route::patch('/ambulances', [AmbulanceController::class, 'update']);
 
         // Route Booking for Driver
         // Index Pending Booking
