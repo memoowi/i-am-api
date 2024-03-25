@@ -42,7 +42,13 @@ class AmbulanceController extends Controller
                 'latitude' => 'required',
                 'longitude' => 'required',
             ]);
-            $ambulances = $request->user()->ambulance()->updateOrCreate([
+            if ($request->user()->ambulance()->exists()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Ambulances already exists',
+                ], 400);
+            }
+            $ambulances = $request->user()->ambulance()->create([
                 'license_plate' => $request->license_plate,
                 'model' => $request->model,
                 'latitude' => $request->latitude,
